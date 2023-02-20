@@ -22,7 +22,7 @@ func main() {
 
 MAINLOOP:
 	for {
-		fmt.Println("Please select an option:")
+		fmt.Println("\nPlease select an option:")
 		fmt.Println("1) Today's Calorie Count")
 		fmt.Println("2) Add Food")
 		fmt.Println("3) List Food Eaten")
@@ -45,9 +45,13 @@ MAINLOOP:
 		case "3":
 			food.ViewFoodAndCals()
 		case "4":
-			// do one more thing
+			fmt.Println("Remove the item by it's number:")
+			food.ViewFoodAndCals()
+			result, _ := readLine()
+			food.Remove(result)
+
 		case "5":
-			// Surely it's the last thing
+			// Nothing to see here
 		case "Q":
 			fmt.Println("LEAVING. . . ")
 			break MAINLOOP
@@ -101,7 +105,7 @@ func readLine() (string, error) {
 
 func readFloat64() (float64, error) {
 
-	floatVal float64
+	var floatVal float64
 	rd := bufio.NewReader(os.Stdin)
 
 	result, err := rd.ReadString('\n')
@@ -118,4 +122,25 @@ func readFloat64() (float64, error) {
 	}
 
 	return floatVal, nil
+}
+
+func readInt64() (int64, error) {
+
+	var intVal int64
+	rd := bufio.NewReader(os.Stdin)
+
+	result, err := rd.ReadString('\n')
+	result = strings.TrimSpace(result)
+
+	if err != nil {
+		return 0.00, fmt.Errorf("could not read string: %w", err)
+	}
+
+	intVal, err = strconv.ParseInt(result, 10, 64)
+
+	if err != nil {
+		return 0.00, fmt.Errorf("could not read integer amount: %w", err)
+	}
+
+	return intVal, nil
 }
