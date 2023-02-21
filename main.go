@@ -1,6 +1,7 @@
 package main
 
 import (
+	"CalorieCounter/data"
 	"CalorieCounter/food"
 	"bufio"
 	"fmt"
@@ -51,7 +52,7 @@ MAINLOOP:
 			food.Remove(result)
 
 		case "5":
-			// Nothing to see here
+			data.Login("test", "test")
 		case "Q":
 			fmt.Println("LEAVING. . . ")
 			break MAINLOOP
@@ -94,7 +95,7 @@ func readLine() (string, error) {
 
 	rd := bufio.NewReader(os.Stdin)
 	text, err := rd.ReadString('\n')
-	text = strings.ToUpper(strings.TrimSpace(text))
+	text = strings.TrimSpace(text)
 
 	if err != nil {
 		return "", fmt.Errorf("failed to read line on ReadLine(), Error:%w", err)
