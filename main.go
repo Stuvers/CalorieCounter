@@ -13,13 +13,16 @@ import (
 
 func main() {
 
+	fmt.Println("Please log in:")
+	fmt.Println("Enter username:")
+	username, _ := readLine()
+	fmt.Println("Enter password:")
+	password, _ := readLine()
+	data.Login(username, password)
 	fmt.Println("Welcome To The CLI Calorie Counter")
 	fmt.Printf("The date is %s.\n", time.Now())
 
-	fmt.Println("Please enter your name:")
-	name, _ := readLine()
-
-	fmt.Printf("Welcome %s, let's see how we're doing then!\n ", name)
+	fmt.Printf("Welcome %s, let's see how we're doing then!\n ", username)
 
 MAINLOOP:
 	for {
@@ -91,22 +94,21 @@ mainloop:
 	return nil
 }
 
-func readLine() (string, error) {
+func readLine() (line string, err error) {
 
 	rd := bufio.NewReader(os.Stdin)
-	text, err := rd.ReadString('\n')
-	text = strings.TrimSpace(text)
+	line, err = rd.ReadString('\n')
+	line = strings.TrimSpace(line)
 
 	if err != nil {
 		return "", fmt.Errorf("failed to read line on ReadLine(), Error:%w", err)
 	}
 
-	return text, nil
+	return line, err
 }
 
-func readFloat64() (float64, error) {
+func readFloat64() (value float64, err error) {
 
-	var floatVal float64
 	rd := bufio.NewReader(os.Stdin)
 
 	result, err := rd.ReadString('\n')
@@ -116,32 +118,11 @@ func readFloat64() (float64, error) {
 		return 0.00, fmt.Errorf("could not read string: %w", err)
 	}
 
-	floatVal, err = strconv.ParseFloat(result, 64)
+	value, err = strconv.ParseFloat(result, 64)
 
 	if err != nil {
 		return 0.00, fmt.Errorf("could not read float amount: %w", err)
 	}
 
-	return floatVal, nil
-}
-
-func readInt64() (int64, error) {
-
-	var intVal int64
-	rd := bufio.NewReader(os.Stdin)
-
-	result, err := rd.ReadString('\n')
-	result = strings.TrimSpace(result)
-
-	if err != nil {
-		return 0.00, fmt.Errorf("could not read string: %w", err)
-	}
-
-	intVal, err = strconv.ParseInt(result, 10, 64)
-
-	if err != nil {
-		return 0.00, fmt.Errorf("could not read integer amount: %w", err)
-	}
-
-	return intVal, nil
+	return value, nil
 }
