@@ -18,47 +18,53 @@ func main() {
 	username, _ := readLine()
 	fmt.Println("Enter password:")
 	password, _ := readLine()
-	data.Login(username, password)
-	fmt.Println("Welcome To The CLI Calorie Counter")
-	fmt.Printf("The date is %s.\n", time.Now())
+	session, err := data.Login(username, password)
 
-	fmt.Printf("Welcome %s, let's see how we're doing then!\n ", username)
+	if err != nil {
+		fmt.Println(err)
+	} else if session {
 
-MAINLOOP:
-	for {
-		fmt.Println("\nPlease select an option:")
-		fmt.Println("1) Today's Calorie Count")
-		fmt.Println("2) Add Food")
-		fmt.Println("3) List Food Eaten")
-		fmt.Println("4) Remove Calories")
-		fmt.Println("5) Display All")
-		fmt.Println("Q) Quit Program")
+		fmt.Println("Welcome To The CLI Calorie Counter")
+		fmt.Printf("The date is %s.\n", time.Now())
 
-		choice, _ := readLine()
+		fmt.Printf("Welcome %s, let's see how we're doing then!\n ", username)
 
-		switch choice {
-		case "1":
-			fmt.Printf("%10.2f\n", food.ViewCalories())
-		case "2":
+	MAINLOOP:
+		for {
+			fmt.Println("\nPlease select an option:")
+			fmt.Println("1) Today's Calorie Count")
+			fmt.Println("2) Add Food")
+			fmt.Println("3) List Food Eaten")
+			fmt.Println("4) Remove Calories")
+			fmt.Println("5) Display All")
+			fmt.Println("Q) Quit Program")
 
-			err := addItem()
+			choice, _ := readLine()
 
-			if err != nil {
-				fmt.Println(err)
+			switch choice {
+			case "1":
+				fmt.Printf("%10.2f\n", food.ViewCalories())
+			case "2":
+
+				err := addItem()
+
+				if err != nil {
+					fmt.Println(err)
+				}
+			case "3":
+				food.ViewFoodAndCals()
+			case "4":
+				fmt.Println("Remove the item by it's number:")
+				food.ViewFoodAndCals()
+				result, _ := readLine()
+				food.Remove(result)
+
+			case "5":
+				data.Login("test", "test")
+			case "Q":
+				fmt.Println("LEAVING. . . ")
+				break MAINLOOP
 			}
-		case "3":
-			food.ViewFoodAndCals()
-		case "4":
-			fmt.Println("Remove the item by it's number:")
-			food.ViewFoodAndCals()
-			result, _ := readLine()
-			food.Remove(result)
-
-		case "5":
-			data.Login("test", "test")
-		case "Q":
-			fmt.Println("LEAVING. . . ")
-			break MAINLOOP
 		}
 	}
 }

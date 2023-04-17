@@ -5,9 +5,9 @@ import (
 	"time"
 )
 
-var foodItems = map[string]foodItem{
-	"Chocolate": {248, time.Now().String()},
-	"Apple":     {48, time.Now().String()},
+var foodItems = []foodItem{
+	{"Chocolate", 248, time.Now().String()},
+	{"Apple", 48, time.Now().String()},
 }
 
 type myInfo struct {
@@ -17,26 +17,27 @@ type myInfo struct {
 }
 
 type foodItem struct {
+	name      string
 	calories  float64
 	dateAdded string
 }
 
-func add(name string, calories float64) {
-	foodItems[name] = foodItem{calories: calories, dateAdded: time.Now().String()}
-}
+// func add(name string, calories float64) {
+// 	foodItems[name] = foodItem{calories: calories, dateAdded: time.Now().String()}
+// }
 
-func remove(name string) {
-	delete(foodItems, name)
-}
+// func remove(name string) {
+// 	delete(foodItems, name)
+// }
 
-func Add(name string, calories float64) {
-	// Do something at some point
-	add(name, calories)
-}
+// func Add(name string, calories float64) {
+// 	// Do something at some point
+// 	add(name, calories)
+// }
 
-func Remove(name string) {
-	remove(name)
-}
+// func Remove(name string) {
+// 	remove(name)
+// }
 
 func ViewCalories() float64 {
 
